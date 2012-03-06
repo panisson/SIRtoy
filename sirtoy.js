@@ -245,6 +245,7 @@ function add_node(name) {
     node_count++;
     name2id[name] = id;
     nodeArray.push({"name": id, "k": 1, "state": "S"});
+    epi_state.S++;
     update_graph();
 }
 

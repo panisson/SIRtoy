@@ -1,7 +1,7 @@
 var index = 0;
 var DELIMITER = '\r';
 
-$("#graph-data").html('Graph Data');
+//$("#graph-data").html('Graph Data');
 
 function handlePartialResponse(request) {
   var i = request.responseText.indexOf(DELIMITER, index);
@@ -29,7 +29,7 @@ function flushBuffer(buffer) {
 function addNodes(nodes) {
   for (var key in nodes) {
     if (nodes.hasOwnProperty(key)) {
-        $("#graph-data").html('add node ' + key);
+        //$("#graph-data").html('add node ' + key);
         add_node(key);
         //update_graph();
     }
@@ -39,7 +39,7 @@ function addNodes(nodes) {
 function addEdges(edges) {
   for (var key in edges) {
     if (edges.hasOwnProperty(key)) {
-        $("#graph-data").html('add edge ' + key + ' from ' + edges[key].source + ' to ' + edges[key].target);
+        //$("#graph-data").html('add edge ' + key + ' from ' + edges[key].source + ' to ' + edges[key].target);
         add_edge(edges[key].source, edges[key].target);
         //update_graph();
     }
