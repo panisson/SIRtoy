@@ -14,11 +14,13 @@ function handlePartialResponse(request) {
 }
 
 function flushBuffer(buffer) {
-  o = window.eval('(' + buffer + ')');
+  o = JSON.parse(buffer);
   for (var key in o) {
-    switch(key) {
-    case 'an': addNodes(o.an);
-    case 'ae': addEdges(o.ae);
+    if (o.hasOwnProperty(key)) {
+      switch(key) {
+      case 'an': addNodes(o.an);
+      case 'ae': addEdges(o.ae);
+    }
     }
   }
   //$("#graph-data").html(JSON.stringify(o));
@@ -26,15 +28,24 @@ function flushBuffer(buffer) {
 
 function addNodes(nodes) {
   for (var key in nodes) {
-    $("#graph-data").html('add node ' + key);
+    if (nodes.hasOwnProperty(key)) {
+        $("#graph-data").html('add node ' + key);
+        add_node(key);
+        //update_graph();
+    }
   }
 }
 
 function addEdges(edges) {
   for (var key in edges) {
-    $("#graph-data").html('add edge ' + key + ' from ' + edges[key].source + ' to ' + edges[key].target);
+    if (edges.hasOwnProperty(key)) {
+        $("#graph-data").html('add edge ' + key + ' from ' + edges[key].source + ' to ' + edges[key].target);
+        add_edge(edges[key].source, edges[key].target);
+        //update_graph();
+    }
   }
 }
+
 
 var myxhr = $.ajax({
    url:        "/stream",
@@ -48,9 +59,10 @@ var myxhr = $.ajax({
        };
    },
    success:    function(data){
-       console.log(data);
+       //console.log(data);
    },
    error:      function(xhr, textStatus, error){
        console.log(xhr.statusText, textStatus, error);
    }
 });
+

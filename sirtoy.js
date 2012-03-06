@@ -11,8 +11,8 @@ var time_interval = 500;
 var count = 0;
 var timeseries;
 
-var nodeArray = G.nodes;
-var edgeArray = G.links;
+var nodeArray = []; //G.nodes;
+var edgeArray = []; //G.links;
 
 var sir_color = {S: "#00ffff", I: "#ffff00", R: "#ff00ff" }
 
@@ -45,7 +45,7 @@ for (i in nodeArray) {
 	kArray[nodeArray[i].name] = 0;
 }
 
-for (i in edgeArray) {
+for (i in edgeArray) {nodeArray
 	kArray[edgeArray[i].source]++;
 	kArray[edgeArray[i].target]++;
 }
@@ -236,4 +236,27 @@ function reset_all () {
 
    $("#start-text").fadeIn();
 }
+
+name2id = {}
+node_count = nodeArray.length;
+
+function add_node(name) {
+    id = node_count;
+    node_count++;
+    name2id[name] = id;
+    nodeArray.push({"name": id, "k": 1, "state": "S"});
+    update_graph();
+}
+
+function add_edge(source, target) {
+
+    edgeArray.push({"source": name2id[source], "target": name2id[target]});
+    nodeArray[name2id[source]].k++;
+    nodeArray[name2id[target]].k++;
+    update_graph();
+}
+
+//add_node("a");
+//add_node("b");
+//add_edge("a","b");
 

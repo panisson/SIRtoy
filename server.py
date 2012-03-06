@@ -21,7 +21,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
             line = f.readline()
             while line != '':
                 self.wfile.write(line)
-                time.sleep(0.01)
+                time.sleep(0.1)
                 line = f.readline()
 
         else:
