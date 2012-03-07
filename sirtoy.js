@@ -239,8 +239,9 @@ function reset_all () {
 
 name2id = {}
 node_count = nodeArray.length;
+edges = {}
 
-function add_node(name) {
+function add_node(name, attributes) {
     id = node_count;
     node_count++;
     name2id[name] = id;
@@ -249,15 +250,50 @@ function add_node(name) {
     update_graph();
 }
 
-function add_edge(source, target) {
+function add_edge(name, source, target, attributes) {
 
-    edgeArray.push({"source": name2id[source], "target": name2id[target]});
-    nodeArray[name2id[source]].k++;
-    nodeArray[name2id[target]].k++;
+    source_id = name2id[source]
+    target_id = name2id[target]
+    attributes = (typeof attributes == 'undefined') ? {} : attributes;
+    attributes.source = source
+    attributes.target = target
+
+    edgeArray.push({"source": source_id, "target": target_id});
+    nodeArray[source_id].k++;
+    nodeArray[target_id].k++;
+    edges[name] = attributes
     update_graph();
 }
 
-//add_node("a");
-//add_node("b");
-//add_edge("a","b");
+function delete_edge(name) {
+    edge = edges[name]
+    if (typeof edge == 'undefined') {
+        console.log("Error removing edge "+name)
+    }
+	
+    source_id = name2id[edge.source]
+    target_id = name2id[edge.target]
+
+    for (i in edgeArray) {
+        //console.log(edgeArray[i])
+        if (edgeArray[i].source.name == source_id &&  edgeArray[i].target.name == target_id) break;
+    }
+    edgeArray.splice(i, 1);
+
+    nodeArray[source_id].k--;
+    nodeArray[target_id].k--;
+    update_graph();
+}
+
+function test() {
+	add_node("a");
+	add_node("b");
+	add_edge("ab","a","b");
+	add_node("c");
+	add_edge("ac","a","c");
+	add_edge("bc","b","c");
+	delete_edge("ab");
+}
+
+//test()
 
