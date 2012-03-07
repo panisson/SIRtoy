@@ -45,7 +45,7 @@ for (i in nodeArray) {
 	kArray[nodeArray[i].name] = 0;
 }
 
-for (i in edgeArray) {nodeArray
+for (i in edgeArray) {
 	kArray[edgeArray[i].source]++;
 	kArray[edgeArray[i].target]++;
 }

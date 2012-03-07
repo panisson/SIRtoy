@@ -2,7 +2,7 @@
 
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import SocketServer
-import time
+import gzip, time
 
 class RequestHandler(SimpleHTTPRequestHandler):
 
@@ -17,11 +17,11 @@ class RequestHandler(SimpleHTTPRequestHandler):
             self.send_header("Content-Type", "application/x-javascript")
             self.send_header("Tranfer-Encoding", "chunked")
             self.end_headers()
-            f = open("graph.json", 'r');
+            f = gzip.open("graph.json.gz", 'r');
             line = f.readline()
             while line != '':
                 self.wfile.write(line)
-                time.sleep(0.1)
+                time.sleep(0.02)
                 line = f.readline()
 
         else:
